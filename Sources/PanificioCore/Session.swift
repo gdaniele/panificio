@@ -15,13 +15,16 @@ public struct Session: Codable, Equatable, Sendable {
     public var counted: TimeInterval
     public var lastSeen: Date
     public var rules: BlockRules
+    /// What a laser session keeps open; nil for a session on the block lists. Older files have none.
+    public var laser: LaserTarget?
 
-    public init(minutes: Int, rules: BlockRules, now: Date) {
+    public init(minutes: Int, rules: BlockRules, now: Date, laser: LaserTarget? = nil) {
         startedAt = now
         self.minutes = min(Self.minutesRange.upperBound, max(Self.minutesRange.lowerBound, minutes))
         counted = 0
         lastSeen = now
         self.rules = rules
+        self.laser = laser
     }
 
     public var total: TimeInterval { TimeInterval(minutes * 60) }

@@ -12,7 +12,7 @@ final class SnapshotTests: XCTestCase {
         addTeardownBlock { try? FileManager.default.removeItem(at: url) }
         let store = Store(url: url)
         try store.save(state)
-        return PanificioModel(store: store)
+        return PanificioModel(store: store, hotkey: false)
     }
 
     private func history(_ now: Date = Date()) -> AppState {

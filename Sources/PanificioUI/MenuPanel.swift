@@ -18,6 +18,8 @@ public struct MenuPanel: View {
             Header(bank: model.bank, streak: model.streak, feeds: model.state.ledger.feeds)
             if let session = model.state.session {
                 RunningView(session: session, blocker: model.blocker, giveUp: model.giveUp)
+            } else if model.laser != nil {
+                LaserChooser(model: model) { model.putLaserAway() }
             } else {
                 idle
             }
@@ -26,6 +28,10 @@ public struct MenuPanel: View {
             Divider()
             HStack {
                 Button("Block lists…") { open() }
+                // One session at a time: no narrowing a running one.
+                Button(model.running ? "🔦 Laser · session running" : "🔦 Laser…") { model.aimLaser() }
+                    .disabled(model.running)
+                    .help("Keep only the app you were using open, and in a browser only its site. ⌃⌥L from anywhere.")
                 Spacer()
                 if !model.running { Button("Quit") { NSApp.terminate(nil) } }
             }
@@ -128,6 +134,9 @@ struct RunningView: View {
                 Text(clock(session.left)).font(.system(size: 44, weight: .semibold, design: .rounded)).monospacedDigit()
                 Spacer()
                 LoafTimer(progress: session.progress)
+            }
+            if let laser = session.laser {
+                Text("🔦 Laser on \(laser.title)").font(.callout.weight(.semibold))
             }
             Text("+\(session.earned) dough rising, paid when the timer ends").font(.callout).foregroundStyle(.secondary)
             if !blocker.blind.isEmpty {
