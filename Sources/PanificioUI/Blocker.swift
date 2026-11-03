@@ -34,6 +34,8 @@ public final class Blocker: ObservableObject {
         guard !active else { return }
         self.rules = rules
         active = true
+        // A laser's aim may have read a browser before the session: only this session's reads count.
+        blind = []
         observer = NSWorkspace.shared.notificationCenter.addObserver(
             forName: NSWorkspace.didActivateApplicationNotification, object: nil, queue: .main
         ) { [weak self] note in
@@ -98,6 +100,18 @@ public final class Blocker: ObservableObject {
         guard coveredBrowser != id else { return }
         coveredBrowser = id
         showPanel(blocked: Sites.host(of: address) ?? "That site", site: true)
+    }
+
+    /// Whether the blocker can read this app's front tab.
+    static func isBrowser(_ id: String?) -> Bool {
+        guard let id else { return false }
+        return safari.contains(id) || chromium.contains(id) || firefox.contains(id)
+    }
+
+    /// The front tab's address, for aiming a laser; nil for an app that isn't a readable browser, or when macOS says no.
+    func address(of app: NSRunningApplication) -> String? {
+        guard let id = app.bundleIdentifier else { return nil }
+        return address(of: app, id: id)
     }
 
     private func address(of app: NSRunningApplication, id: String) -> String? {

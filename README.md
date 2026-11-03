@@ -6,6 +6,7 @@ A macOS menu bar app that helps you stay focused by blocking distracting apps. I
 
 - **Sessions** from 5 minutes to 8 hours, or a Small, Medium or Large loaf for 25, 50 or 90 minutes, with the time left and what's at stake in the menu bar.
 - **Block lists** for websites and for apps. Each is off, a deny list (*Block these*) or an allow list (*Only these*).
+- **Laser.** Press ⌃⌥L, or choose 🔦 Laser in the menu, to focus on the app you were just using for 25, 50 or 90 minutes. Everything else is blocked. In a browser, only that tab's site and its subdomains stay open. It earns like any other session, and it can't start while one runs.
 - **All or nothing.** One point of dough for every minute, paid only when the timer ends. Stop early and that session's dough is gone. The bank is safe.
 - **Streak and histogram.** Days in a row with a finished session, and your focus minutes over the last 14 days.
 - **Your bakery.** It feeds you at first, then your friends, your coworkers, your neighborhood and your city as finished sessions add up. It never shrinks.
@@ -29,7 +30,7 @@ Or download a zip from [Releases](https://github.com/gdaniele/panificio/releases
 
 ## Permissions
 
-Panificio asks for these only when a session has to read a browser:
+Panificio asks for these only when a session has to read a browser, or a laser is aimed at one:
 
 | Permission | Why |
 |---|---|

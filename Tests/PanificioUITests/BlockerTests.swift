@@ -81,7 +81,7 @@ final class ModelTests: XCTestCase {
         var quiet = state
         quiet.rules = BlockRules()
         try store.save(quiet)
-        return (PanificioModel(store: store), store)
+        return (PanificioModel(store: store, hotkey: false), store)
     }
 
     func testGivingUpEndsTheSessionAndPaysNothing() throws {
